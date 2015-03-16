@@ -55,6 +55,8 @@ class Pool(object):
     def add_task(self, func, args):
         """添加单个任务
         """
+        if not isinstance(args, tuple):
+            raise TypeError("args must be tuple type!")
         self.input_queue.put((func, args))
 
     def add_tasks(self, tasks):
