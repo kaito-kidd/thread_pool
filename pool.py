@@ -7,6 +7,7 @@
 import Queue
 import threading
 
+
 class Task(threading.Thread):
 
     """ 任务  """
@@ -30,13 +31,11 @@ class Task(threading.Thread):
                 print "%s finished!" % self.thread_name
                 break
             try:
-                with self.lock:
-                    print "%s: processing ..." % self.thread_name
                 result = func(*args)
             except Exception as exc:
                 self.error_queue.put((func.func_name, args, str(exc)))
             else:
-                self.output_queue.put(func(*args))
+                self.output_queue.put(result)
 
 
 class Pool(object):
@@ -89,9 +88,11 @@ class Pool(object):
         for task in self.tasks:
             task.join()
 
+
 def test(i):
-    r = i * 10
-    return r
+    """test """
+    result = i * 10
+    return result
 
 
 def main():
